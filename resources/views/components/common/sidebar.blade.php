@@ -6,8 +6,10 @@
                 <a href="/" class="main-logo flex items-center shrink-0">
                     <img class="w-8 ml-[5px] flex-none" src="/assets/images/logo.png"
                         alt="image" />
+                    <!--
                     <span
                         class="text-base ltr:ml-1.5 rtl:mr-1.5  font-semibold  align-middle lg:inline dark:text-white-light">Agenda Virtual Escolar</span>
+-->
                 </a>
                 <a href="javascript:;"
                     class="collapse-icon w-8 h-8 rounded-full flex items-center hover:bg-gray-500/10 dark:hover:bg-dark-light/10 dark:text-white-light transition duration-300 rtl:rotate-180"
@@ -38,7 +40,7 @@
                                         fill="currentColor" />
                                 </svg>
                                     <span
-                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">Home</span>
+                                        class="ltr:pl-3 rtl:pr-3 text-black dark:text-[#506690] dark:group-hover:text-white-dark">Inicio</span>
                                 </div>
                             </a>
                         </li>
@@ -156,7 +158,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/apps/comunidad/list" class="group">
+                            <a href="{{ route('apps.comunidad.index')}}" class="group">
                                 <div class="flex items-center">
                                 <svg class="group-hover:!text-primary shrink-0" width="20" height="20" viewBox="0 0 24 24" 
                                     fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -218,7 +220,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="group">
+                            <a href="{{ route('apps.comunidad_estudiante.index')}}" class="group">
                                 <div class="flex items-center">
                                 <svg class="group-hover:!text-primary shrink-0" width="20" height="20" viewBox="0 0 24 24" 
                                     fill="none" xmlns="http://www.w3.org/2000/svg">

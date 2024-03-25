@@ -7,6 +7,7 @@ use App\Models\Publicacion;
 use App\Models\Grupo;
 use App\Models\Servicio;
 use App\Models\Prioridad;
+use App\Models\Estudiante;
 use App\Models\Administrador;
 use MongoDB\BSON\UTCDateTime;
 use Carbon\Carbon;
@@ -19,16 +20,35 @@ class PublicacionController extends Controller
      */
     public function index()
     {
-        $dataGrupo = Grupo::all();
-        $dataPrioridad = Prioridad::all();
-        $data = Publicacion::all();
-        
-        foreach ($data as $publicacion) {
-            $publicacion->fechaInicio = Carbon::createFromTimestampMs($publicacion->fechaInicio)->format('Y-m-d H:i:s A');
-            $publicacion->fechaFin = Carbon::createFromTimestampMs($publicacion->fechaFin)->format('Y-m-d H:i:s A');    
+
+        if(Auth::user()->id_rol == 1 || Auth::user()->id_rol == 2) {
+
+            $dataGrupo = Grupo::all();
+            $dataPrioridad = Prioridad::all();
+
+            $adminLoguedo = Auth::user();
+            $idAdmin = $adminLoguedo->_id;
+
+            $data = Publicacion::where('administrador.id_admin', $idAdmin)->get();
+            
+            foreach ($data as $publicacion) {
+                $publicacion->fechaInicio = Carbon::createFromTimestampMs($publicacion->fechaInicio)->format('Y-m-d H:i:s A');
+                $publicacion->fechaFin = Carbon::createFromTimestampMs($publicacion->fechaFin)->format('Y-m-d H:i:s A');
+            }
+            
+            return view('apps.comunidad.index')->with(compact('data', 'dataGrupo', 'dataPrioridad'));
+
+        } elseif(Auth::user()->id_rol == 3) {
+
+            $estudianteLoguedo = Auth::user();
+            $estudiante = Estudiante::where('id_user', $estudianteLoguedo->_id)->first();
+            $grupoEstudiante = $estudiante->grupo['grupo'];
+
+            $data = Publicacion::where('grupo.grupo', $grupoEstudiante)->get();
+            return view('apps.comunidad_estudiante.index')->with(compact('data'));
         }
         
-        return view('apps.comunidad.index')->with(compact('data', 'dataGrupo', 'dataPrioridad'));
+        
     }
 
     /**
@@ -58,6 +78,7 @@ class PublicacionController extends Controller
             'name' => Auth::user()->name,
             'apellido_pat' => Auth::user()->apellido_pat,
             'apellido_mat' => Auth::user()->apellido_mat,
+            'imagen' => Auth::user()->imagen,
 
         ];
         $publicacion->servicio = [

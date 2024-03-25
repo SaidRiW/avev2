@@ -14,7 +14,7 @@
                     </button>
                 </div>
                 <!-- Formulario de Edición -->
-                <form id="editForm" class="flex flex-col gap-4" action="" method="POST" tabindex="-1" role="dialog">
+                <form id="editForm" class="flex flex-col gap-4" action="" method="POST" tabindex="-1" role="dialog" enctype="multipart/form-data">
                     @csrf  
                     @method('PUT')
                     <div class="relative">

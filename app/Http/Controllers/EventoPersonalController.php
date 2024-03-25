@@ -18,7 +18,12 @@ class EventoPersonalController extends Controller
     public function index()
     {
         $dataPrioridad = Prioridad::all();
-        $data = EventoPersonal::all();
+
+        $estudianteLoguedo = Auth::user();
+        $estudiante = Estudiante::where('id_user', $estudianteLoguedo->_id)->first();
+        $matriculaEstudiante = $estudiante->matricula;
+
+        $data = EventoPersonal::where('matricula', $matriculaEstudiante)->get();
         
         foreach ($data as $evento) {
             $evento->fecha_hora = Carbon::createFromTimestampMs($evento->fecha_hora)->format('Y-m-d H:i:s A');

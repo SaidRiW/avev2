@@ -20,19 +20,31 @@ class CitaController extends Controller
     public function index()
     {
 
-        $data = Cita::all();
-        
-        foreach ($data as $cita) {
-            $cita->fecha_hora = Carbon::createFromTimestampMs($cita->fecha_hora)->format('Y-m-d H:i:s A');
-        }
-
         if(Auth::user()->id_rol == 1) {
+
+            $adminLoguedo = Auth::user();
+            $idAdmin = $adminLoguedo->_id;
+
+            $data = Cita::where('administrador.id_admin', $idAdmin)->get();
+        
+            foreach ($data as $cita) {
+                $cita->fecha_hora = Carbon::createFromTimestampMs($cita->fecha_hora)->format('Y-m-d H:i:s A');
+            }
             
             return view('apps.cita.index')->with(compact('data'));
 
         } elseif(Auth::user()->id_rol == 3) {
 
             $dataServicio = Servicio::all();
+
+            $estudianteLoguedo = Auth::user();
+            $estudiante = Estudiante::where('id_user', $estudianteLoguedo->_id)->first();
+            $matriculaEstudiante = $estudiante->matricula;
+
+            $data = Cita::where('estudiante.matricula', $matriculaEstudiante)->get();
+            foreach ($data as $cita) {
+                $cita->fecha_hora = Carbon::createFromTimestampMs($cita->fecha_hora)->format('Y-m-d H:i:s A');
+            }
 
             return view('apps.cita_estudiante.index')->with(compact('data', 'dataServicio'));
 

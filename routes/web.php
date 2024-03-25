@@ -57,12 +57,17 @@ Route::middleware('auth')->group(function () {
         Route::delete('/apps/carrera/{id}', [CarreraController::class, 'destroy'])->name('apps.carrera.destroy');
     });
 
-    /* Rutas para el modulo de comunidad (Admin) */
+    /* Rutas para el modulo de comunidad (admin) */
     Route::middleware('auth')->group(function () {
         Route::get('/apps/comunidad', [PublicacionController::class, 'index'])->name('apps.comunidad.index');
         Route::post('/apps/comunidad', [PublicacionController::class, 'store'])->name('apps.comunidad.store');
         Route::put('/apps/comunidad/{id}', [PublicacionController::class, 'update'])->name('apps.comunidad.update');
         Route::delete('/apps/comunidad/{id}', [PublicacionController::class, 'destroy'])->name('apps.comunidad.destroy');
+    });
+
+    /* Rutas para el modulo de comunidad (estudiante) */
+    Route::middleware('auth')->group(function () {
+        Route::get('/apps/comunidad_estudiante', [PublicacionController::class, 'index'])->name('apps.comunidad_estudiante.index');
     });
 
     /* Rutas para el modulo de perfil */
@@ -79,7 +84,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/apps/evento/{id}', [EventoPersonalController::class, 'destroy'])->name('apps.evento.destroy');
     });
 
-    /* Rutas para el modulo de citas (Admin) */
+    /* Rutas para el modulo de citas (admin) */
     Route::middleware('auth')->group(function () {
         Route::get('/apps/cita', [CitaController::class, 'index'])->name('apps.cita.index');
         Route::post('/apps/cita', [CitaController::class, 'store'])->name('apps.cita.store');
