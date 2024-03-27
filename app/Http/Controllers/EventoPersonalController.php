@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Prioridad;
 use App\Models\Estudiante;
 use App\Models\EventoPersonal;
+use App\Models\Publicacion;
 use MongoDB\BSON\UTCDateTime;
 use Carbon\Carbon;
 use Auth;
@@ -22,14 +23,21 @@ class EventoPersonalController extends Controller
         $estudianteLoguedo = Auth::user();
         $estudiante = Estudiante::where('id_user', $estudianteLoguedo->_id)->first();
         $matriculaEstudiante = $estudiante->matricula;
+        $grupoEstudiante = $estudiante->grupo['grupo'];
 
         $data = EventoPersonal::where('matricula', $matriculaEstudiante)->get();
+        $dataPublicacion = Publicacion::where('grupo.grupo', $grupoEstudiante)->get();
         
         foreach ($data as $evento) {
             $evento->fecha_hora = Carbon::createFromTimestampMs($evento->fecha_hora)->format('Y-m-d H:i:s A');
         }
+
+        foreach ($dataPublicacion as $publicacion) {
+            $publicacion->fechaInicio = Carbon::createFromTimestampMs($publicacion->fechaInicio)->format('Y-m-d H:i:s A');
+            $publicacion->fechaFin = Carbon::createFromTimestampMs($publicacion->fechaFin)->format('Y-m-d H:i:s A');
+        }
         
-        return view('apps.evento.index')->with(compact('data', 'dataPrioridad'));
+        return view('apps.evento.index')->with(compact('data', 'dataPrioridad', 'dataPublicacion'));
     }
 
     /**

@@ -3,7 +3,7 @@
         <div class="flex items-center justify-center min-h-screen">
             <div class="panel p-8 rounded-lg overflow-hidden w-full max-w-md">
                 <div class="flex justify-between items-center mb-4 dark:text-white">
-                    <h2 class="text-xl font-semibold">{{ _('Nuevo evento') }}</h2>
+                    <h2 class="text-xl font-semibold">{{ _('Nuevo evento personal') }}</h2>
                     <button id="closeCreateModal" class="text-gray-600 hover:text-gray-800 focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

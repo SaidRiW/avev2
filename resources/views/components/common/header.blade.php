@@ -21,10 +21,12 @@
             <div class="ltr:mr-2 rtl:ml-2 hidden sm:block">
                 <ul class="flex items-center space-x-2 rtl:space-x-reverse dark:text-[#d0d2d6]">
                     <li>
-                        <a href="/apps/calendar"
+                        <a href="/index"
                             class="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="17" cy="17" r="2" stroke="currentColor"
+                                    stroke-width="1.5" />
                                 <path
                                     d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z"
                                     stroke="currentColor" stroke-width="1.5" />
@@ -37,8 +39,9 @@
                             </svg>
                         </a>
                     </li>
+                    @if(Auth::user()->id_rol == 1 ||  Auth::user()->id_rol == 2)
                     <li>
-                        <a href="/apps/todolist"
+                        <a href="{{ route('apps.comunidad.index')}}"
                             class="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -54,6 +57,26 @@
                             </svg>
                         </a>
                     </li>
+                    @endif
+                    @if(Auth::user()->id_rol == 3)
+                    <li>
+                        <a href="{{ route('apps.comunidad.index')}}"
+                            class="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="19" cy="5" r="3" stroke="currentColor"
+                                    stroke-width="1.5" />
+                                <path d="M7 14H16" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                                <path d="M7 17.5H13" stroke="currentColor" stroke-width="1.5"
+                                    stroke-linecap="round" />
+                                <path
+                                    d="M2 12C2 16.714 2 19.0711 3.46447 20.5355C4.92893 22 7.28595 22 12 22C16.714 22 19.0711 22 20.5355 20.5355C22 19.0711 22 16.714 22 12V10.5M13.5 2H12C7.28595 2 4.92893 2 3.46447 3.46447C2.49073 4.43821 2.16444 5.80655 2.0551 8"
+                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </a>
+                    </li>
+                    @endif
                     <li><a href="/apps/chat"
                             class="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"

@@ -1,55 +1,161 @@
 <x-layout.default>
-    <div class="panel">
-        <div class="mx-auto" style="width: 55%;"> <!-- Aquí se establece el ancho fijo deseado -->
-            <div class="px-8 pt-4 pb-4 bg-gray-50 dark:bg-gray-900 flex items-center rounded-lg justify-center">
-                <div class="px-5 py-4 bg-white dark:bg-gray-800 shadow rounded-lg w-screen">
-                    <div class="flex mb-4">
-                        <img class="w-12 h-12 rounded-full" src="/assets/images/girlfriend.jpeg"/>
-                        <div class="ml-2 mt-0.5">
-                            <span class="block font-medium text-base leading-snug text-black dark:text-gray-100">Sofía Daniela Ayuso Castillo</span>
-                            <span class="block text-sm text-gray-500 dark:text-gray-400 font-light leading-snug">Administrativo</span>
+
+    <link href="{{ Vite::asset('resources/css/fullcalendar.min.css') }}" rel='stylesheet' />
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/flatpickr.min.css') }}">
+    <script src="/assets/js/flatpickr.js"></script>
+    <script src='/assets/js/fullcalendar.min.js'></script>
+    <script src='/assets/js/es.js'></script>
+    <div x-data="calendar">
+        <div class="panel">
+            <div class="mb-5">
+                <div class="mb-4 flex items-center sm:flex-row flex-col sm:justify-between justify-center">
+                    <div class="sm:mb-0 mb-4">
+                        <div class="text-lg font-semibold ltr:sm:text-left rtl:sm:text-right text-center">Calendario</div>
+                        <div class="flex items-center mt-2 flex-wrap sm:justify-start justify-center">
+                            <div class="flex items-center ltr:mr-4 rtl:ml-4">
+                                <div class="h-2.5 w-2.5 rounded-sm ltr:mr-2 rtl:ml-2 bg-danger"></div>
+                                <div>Alta</div>
+                            </div>
+                            <div class="flex items-center ltr:mr-4 rtl:ml-4">
+                                <div class="h-2.5 w-2.5 rounded-sm ltr:mr-2 rtl:ml-2 bg-warning"></div>
+                                <div>Media</div>
+                            </div>
+                            <div class="flex items-center ltr:mr-4 rtl:ml-4">
+                                <div class="h-2.5 w-2.5 rounded-sm ltr:mr-2 rtl:ml-2 bg-success"></div>
+                                <div>Baja</div>
+                            </div>
+                            @if(Auth::user()->id_rol  == 1 || Auth::user()->id_rol  == 3)
+                            <div class="flex items-center ltr:mr-4 rtl:ml-4">
+                                <div class="h-2.5 w-2.5 rounded-sm ltr:mr-2 rtl:ml-2 bg-primary"></div>
+                                <div>Cita</div>
+                            </div>
+                            @endif
                         </div>
                     </div>
-                    <p class="font-bold text-gray-900 dark:text-gray-100 mb-2">Lorem ipsum dolor sit amet</p>
-                    <p class="text-gray-800 dark:text-gray-100 leading-snug md:leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-                    <img class="mt-4 mx-auto" src="/assets/images/65fdb5a54a20a_1711125925_menu-heade.jpg"/>
-                    <div class="flex justify-end mt-5">
-                        <div class="ml-1 text-gray-500 dark:text-gray-400 font-light">25 de marzo 08:24</div>
-                    </div>
+                    @if(Auth::user()->id_rol == 3)
+                    <button type="button" class="btn btn-primary" id="openCreateModal">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" class="w-5 h-5 ltr:mr-2 rtl:ml-2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Agendar evento
+                    </button>
+                    @endif
                 </div>
-            </div>
-            <div class="px-8 pt-4 pb-4 bg-gray-50 dark:bg-gray-900 flex items-center rounded-lg justify-center">
-                <div class="px-5 py-4 bg-white dark:bg-gray-800 shadow rounded-lg w-screen">
-                    <div class="flex mb-4">
-                        <img class="w-12 h-12 rounded-full" src="/assets/images/girlfriend.jpeg"/>
-                        <div class="ml-2 mt-0.5">
-                            <span class="block font-medium text-base leading-snug text-black dark:text-gray-100">Sofía Daniela Ayuso Castillo</span>
-                            <span class="block text-sm text-gray-500 dark:text-gray-400 font-light leading-snug">Administrativo</span>
-                        </div>
-                    </div>
-                    <p class="font-bold text-gray-900 dark:text-gray-100 mb-2">Lorem ipsum dolor sit amet</p>
-                    <p class="text-gray-800 dark:text-gray-100 leading-snug md:leading-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. </p>
-                    <div class="flex justify-end mt-5">
-                        <div class="ml-1 text-gray-500 dark:text-gray-400 font-light">25 de marzo 08:24</div>
-                    </div>
-                </div>
-            </div>
-            <div class="px-8 pt-4 pb-4 bg-gray-50 dark:bg-gray-900 flex items-center rounded-lg justify-center">
-                <div class="px-5 py-4 bg-white dark:bg-gray-800 shadow rounded-lg w-screen">
-                    <div class="flex mb-4">
-                        <img class="w-12 h-12 rounded-full" src="/assets/images/girlfriend.jpeg"/>
-                        <div class="ml-2 mt-0.5">
-                            <span class="block font-medium text-base leading-snug text-black dark:text-gray-100">Sofía Daniela Ayuso Castillo</span>
-                            <span class="block text-sm text-gray-500 dark:text-gray-400 font-light leading-snug">Administrativo</span>
-                        </div>
-                    </div>
-                    <p class="font-bold text-gray-900 dark:text-gray-100 mb-2">Lorem ipsum dolor sit amet</p>
-                    <img class="mt-4 mx-auto" src="/assets/images/65fdb5a54a20a_1711125925_menu-heade.jpg"/>
-                    <div class="flex justify-end mt-5">
-                        <div class="ml-1 text-gray-500 dark:text-gray-400 font-light">25 de marzo 08:24</div>
-                    </div>
-                </div>
+                <div class="calendar-wrapper" id='calendar'></div>
             </div>
         </div>
     </div>
+    @if(Auth::user()->id_rol == 3)
+        @include('apps.evento.create')
+    @endif
+    <script>
+        document.addEventListener("alpine:init", () => {
+            Alpine.data("calendar", () => ({
+                defaultParams: ({
+                    id: null,
+                    title: '',
+                    start: '',
+                    end: '',
+                    description: '',
+                    type: 'primary'
+                }),
+                params: {
+                    id: null,
+                    title: '',
+                    start: '',
+                    end: '',
+                    description: '',
+                    type: 'primary'
+                },
+                isAddEventModal: false,
+                minStartDate: '',
+                minEndDate: '',
+                calendar: null,
+                now: new Date(),
+                events: @json($eventos),
+                init() {
+                    console.log(this.events);
+                    var calendarEl = document.getElementById('calendar');
+                    this.calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        headerToolbar: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                        },
+                        editable: true,
+                        dayMaxEvents: true,
+                        selectable: true,
+                        droppable: true,
+                        eventClick: function(calEvent, jsEvent, view) {
+                            var url = calEvent.url;
+                            if (url) {
+                                window.location.href = url;
+                            }
+                        },
+                        select: (event) => {
+                            this.showCreateModal(event)
+                        },
+                        events: this.events,
+                        locale: 'es',
+                    });
+                    this.calendar.render();
+
+                    this.$watch('$store.app.sidebar', () => {
+                        setTimeout(() => {
+                            this.calendar.render();
+                        }, 300);
+                    });
+                },
+
+                showCreateModal(event) {
+                    // Muestra el modal de creación
+                    const modalCreate = document.getElementById('modalCreate');
+                    modalCreate.classList.remove('hidden');
+
+                    // Extrae la fecha del evento
+                    const startDate = event.start;
+
+                    // Formatea la fecha para el campo de fecha y hora
+                    const formattedDate = startDate.getFullYear() + '-' + ('0' + (startDate.getMonth() + 1)).slice(-2) + '-' + ('0' + startDate.getDate()).slice(-2) + ' ' + ('0' + startDate.getHours()).slice(-2) + ':' + ('0' + startDate.getMinutes()).slice(-2);
+
+                    // Actualiza el valor del campo de fecha y hora en el formulario
+                    document.getElementById('fecha_hora').value = formattedDate;
+                }
+
+            }));
+
+            //CREAR REGISTRO
+            const openCreateModalButton = document.getElementById('openCreateModal');
+            const closeCreateModalButton = document.getElementById('closeCreateModal');
+            const cancelCreateModalButton = document.getElementById('cancelCreateModal');
+            const modalCreate = document.getElementById('modalCreate');
+
+            openCreateModalButton.addEventListener('click', function () {
+                modalCreate.classList.remove('hidden');
+            });
+
+            closeCreateModalButton.addEventListener('click', function () {
+                modalCreate.classList.add('hidden');
+            });
+
+            cancelCreateModalButton.addEventListener('click', function () {
+                modalCreate.classList.add('hidden');
+            });
+
+            Alpine.data("form", () => ({
+                init() {
+                    flatpickr(document.getElementById('fecha_hora'), {
+                        enableTime: true,
+                        dateFormat: 'Y-m-d H:i'
+                    })
+                }
+            }));
+        });
+    </script>
+
 </x-layout.default>

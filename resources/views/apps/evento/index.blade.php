@@ -3,9 +3,8 @@
     <script src="/assets/js/simple-datatables.js"></script>
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/flatpickr.min.css') }}">
     <script src="/assets/js/flatpickr.js"></script>
-
-    <div x-data="striped">
-        <div class="panel">
+    <div class="panel">
+        <div x-data="striped">   
             <div>
                 <div class="md:absolute md:top-5 ltr:md:left-5 rtl:md:right-5">
                     <div class="flex items-center gap-2 mb-5">
@@ -21,7 +20,10 @@
                     </div>
                 </div>
             </div>
-            <table id="tableHover" class="table-hover"></table>
+            <table id="tableHover" class="table-hover"><caption class="mb-4 font-semibold text-lg">Eventos personales</caption></table>
+        </div>
+        <div x-data="striped2">
+            <table id="tableHover2" class="table-hover"><caption class="mb-4 font-semibold text-lg">Eventos de comunidad</caption></table>
         </div>
     </div>
     @include('apps.evento.create')
@@ -148,6 +150,54 @@
                             });
                         });
                     });
+
+                }
+            }));
+            Alpine.data("striped2", () => ({
+                init() {
+                    const tableOptions2 = {
+                        data: {
+                            headings: ["#", "Título", "Descripción", "Fecha Inicio", "Fecha Fin", "Prioridad"],
+                            data: [
+                                @php
+                                    $cont = 1 ;  
+                                @endphp   
+                                @foreach($dataPublicacion as $publicacion)
+                                    @if($publicacion->fechaInicio != '1969-12-31 18:00:00 PM' || $publicacion->fechaFin != '1969-12-31 18:00:00 PM')
+                                        [
+                                            '{{ $cont }}',
+                                            '{{ $publicacion->titulo }}',
+                                            '{{ $publicacion->descripcion }}',
+                                            '{{ $publicacion->fechaInicio }}',
+                                            '{{ $publicacion->fechaFin }}',
+                                            '<div class="flex items-center"><div class="h-2.5 w-2.5 rounded-sm ltr:mr-2 rtl:ml-2 bg-{{ $publicacion->prioridad["color"] }}"></div><div>{{ $publicacion->prioridad["tipo"] }}</div></div>',
+                                        ],
+                                        @php
+                                            $cont++;
+                                        @endphp
+                                    @endif
+                                @endforeach
+                            ]
+                        },
+                        sortable: false,
+                        searchable: true,
+                        perPage: 10,
+                        perPageSelect: [10, 20, 30, 50, 100],
+                        firstLast: true,
+                        firstText: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>',
+                        lastText: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>',
+                        prevText: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>',
+                        nextText: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>',
+                        labels: {
+                            perPage: "{select}"
+                        },
+                        layout: {
+                            top: "{search}",
+                            bottom: "{info}{select}{pager}",
+                        },
+                    };
+
+                    const datatable2 = new simpleDatatables.DataTable('#tableHover2', tableOptions2);
 
                 }
             }));
