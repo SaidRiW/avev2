@@ -17,7 +17,7 @@
                     <img class="mt-4 mx-auto" src="{{ $info->imagen }}"/>
                     @endif
                     <div class="flex justify-end mt-5">
-                        <div class="ml-1 text-gray-500 dark:text-gray-400 font-light">{{ $info->created_at }}</div>
+                        <div class="ml-1 text-gray-500 dark:text-gray-400 font-light">{{ $info->created_at->diffForHumans() }}</div>
                     </div>
                 </div>
             </div>

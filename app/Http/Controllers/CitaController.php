@@ -8,6 +8,10 @@ use App\Models\Estudiante;
 use App\Models\Servicio;
 use App\Models\Cita;
 use App\Models\User;
+use App\Events\CitaAdminEvent;
+use App\Events\CitaEstudianteEvent;
+use App\Events\CitaEditEstudianteEvent;
+use App\Events\CitaCancelEstudianteEvent;
 use MongoDB\BSON\UTCDateTime;
 use Carbon\Carbon;
 use Auth;
@@ -81,13 +85,16 @@ class CitaController extends Controller
                 'name' => Auth::user()->name,
                 'apellido_pat' => Auth::user()->apellido_pat,
                 'apellido_mat' => Auth::user()->apellido_mat,
+                'imagen' => Auth::user()->imagen,
             ];
 
             $cita->estudiante = [
                 'matricula' => $estudiante->matricula,
+                'id_user' => $perfilEstudiante->_id,
                 'name' => $perfilEstudiante->name,
                 'apellido_pat' => $perfilEstudiante->apellido_pat,
                 'apellido_mat' => $perfilEstudiante->apellido_mat,
+                'imagen'  => $perfilEstudiante->imagen,
             ];
             
             $cita->servicio = [
@@ -105,6 +112,9 @@ class CitaController extends Controller
             $cita->motivo = $request->motivo;
 
             $cita->save();
+
+            event(new CitaEstudianteEvent($cita));
+
             return redirect()->route('apps.cita.index');
 
         }elseif(Auth::user()->id_rol == 3) {
@@ -124,13 +134,16 @@ class CitaController extends Controller
                 'name' => $perfilAdmin->name,
                 'apellido_pat' => $perfilAdmin->apellido_pat,
                 'apellido_mat' => $perfilAdmin->apellido_mat,
+                'imagen'  => $perfilAdmin->imagen,
             ];
 
             $cita->estudiante = [
                 'matricula' => $estudiante->matricula,
+                'id_user' => Auth::user()->_id,
                 'name' => Auth::user()->name,
                 'apellido_pat' => Auth::user()->apellido_pat,
                 'apellido_mat' => Auth::user()->apellido_mat,
+                'imagen' => Auth::user()->imagen,
             ];
             
             $cita->servicio = [
@@ -148,6 +161,8 @@ class CitaController extends Controller
             $cita->motivo = $request->motivo;
 
             $cita->save();
+
+            event(new CitaAdminEvent($cita));
 
             return redirect()->route('apps.cita_estudiante.index');
 
@@ -182,6 +197,9 @@ class CitaController extends Controller
         $cita->motivo = $request->motivo;
 
         $cita->save();
+
+        event(new CitaEditEstudianteEvent($cita));
+
         return redirect()->route('apps.cita.index');
     }
 
@@ -190,7 +208,14 @@ class CitaController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = Cita::find($id)->delete();
-        return redirect()->route('apps.cita.index');
-    }
+        try {
+            $cita = Cita::findOrFail($id);
+            event(new CitaCancelEstudianteEvent($cita));
+            $cita->delete();
+            return redirect()->route('apps.cita.index')->with('success', 'Cita cancelada con éxito.');
+        } catch (\Exception $e) {
+            // Log the error or handle it as needed
+            return redirect()->route('apps.cita.index')->with('error', 'Error al cancelar la cita.');
+        }
+    }   
 }

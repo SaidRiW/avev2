@@ -129,6 +129,7 @@
 
             }));
 
+            @if(Auth::user()->id_rol == 3)
             //CREAR REGISTRO
             const openCreateModalButton = document.getElementById('openCreateModal');
             const closeCreateModalButton = document.getElementById('closeCreateModal');
@@ -155,6 +156,7 @@
                     })
                 }
             }));
+            @endif
         });
     </script>
 

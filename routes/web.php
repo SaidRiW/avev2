@@ -8,6 +8,7 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\PublicacionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\EventoPersonalController;
 
 /*
@@ -29,6 +30,10 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/index', [CalendarioController::class, 'index'])->name('index');
 });
+
+/* Rutas para marcar como leídas las notificaciones */
+Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+Route::post('/notification/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notification.markAsRead');
 
 Route::middleware('auth')->group(function () {
 

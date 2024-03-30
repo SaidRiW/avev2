@@ -9,6 +9,7 @@ use App\Models\Servicio;
 use App\Models\Prioridad;
 use App\Models\Estudiante;
 use App\Models\Administrador;
+use App\Events\PostEvent;
 use MongoDB\BSON\UTCDateTime;
 use Carbon\Carbon;
 use Auth;
@@ -112,6 +113,9 @@ class PublicacionController extends Controller
             'color' => $prioridad->color,
         ];
         $publicacion->save();
+
+        event(new PostEvent($publicacion));
+
         return redirect()->route('apps.comunidad.index');
     }
 

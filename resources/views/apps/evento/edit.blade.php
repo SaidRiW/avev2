@@ -29,7 +29,7 @@
                             <label for="fecha_horaEdit">Fecha inicial</label>
                             <input id="fecha_horaEdit" name="fecha_hora" class="form-input" />
                         </div>
-                    <div class="relative mb-2">
+                    <div class="relative mb-4">
                         <label>Prioridad</label>
                         <div class="mt-3">
                         @foreach ($dataPrioridad as $item)

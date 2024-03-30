@@ -25,7 +25,7 @@
                         <label for="txtMotivo">Motivo</label>
                         <textarea rows="3" id="txtMotivo" name="motivo" class="form-textarea ltr:rounded-l-none rtl:rounded-r-none"></textarea>
                     </div>
-                    <div class="relative" x-data="formEdit">
+                    <div class="relative mb-4" x-data="formEdit">
                             <label for="fecha_horaEdit">Fecha y hora</label>
                             <input id="fecha_horaEdit" name="fecha_hora" class="form-input" />
                     </div>

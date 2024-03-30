@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Auth\User as Authenticatable;
+use App\Models\Notification;
 
 class User extends Authenticatable
 {
@@ -53,4 +54,9 @@ class User extends Authenticatable
     protected $collection = 'users';
     protected $primaryKey = '_id';
 
+    public function routeNotificationForDatabase($notification)
+    {
+        return new Notification();
+    }     
+    
 }
