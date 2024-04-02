@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
 /* Rutas para el modulo de citas (admin) */
 Route::middleware('auth')->group(function () {
     Route::get('/apps/cita', [CitaController::class, 'index'])->name('apps.cita.index');
+    Route::get('/apps/cita/estudiante/{matricula}', [CitaController::class, 'buscarPorMatricula'])->name('apps.cita.estudiante.buscarPorMatricula');
     Route::post('/apps/cita', [CitaController::class, 'store'])->name('apps.cita.store');
     Route::put('/apps/cita/{id}', [CitaController::class, 'update'])->name('apps.cita.update');
     Route::delete('/apps/cita/{id}', [CitaController::class, 'destroy'])->name('apps.cita.destroy');

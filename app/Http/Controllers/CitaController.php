@@ -217,5 +217,22 @@ class CitaController extends Controller
             // Log the error or handle it as needed
             return redirect()->route('apps.cita.index')->with('error', 'Error al cancelar la cita.');
         }
-    }   
+    } 
+    
+    public function buscarPorMatricula($matricula)
+    {
+        $estudiante = Estudiante::where('matricula', $matricula)->first();
+    
+        if ($estudiante) {
+            $usuario = User::where('_id', $estudiante['id_user'])->first();
+                        
+            return response()->json([
+                'success' => true,
+                'nombre' => $usuario['name'] . ' ' . $usuario['apellido_pat'] . ' ' . $usuario['apellido_mat']
+            ]);
+        }
+    
+        return response()->json(['success' => false]);
+    }
+    
 }

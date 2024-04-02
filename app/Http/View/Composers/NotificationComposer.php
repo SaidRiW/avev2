@@ -18,6 +18,7 @@ class NotificationComposer
             $unreadNotifications = Notification::where('data.notifiable_id', $userId)
                 ->where('data.notifiable_type', $userClass)
                 ->whereNull('read_at')
+                ->orderBy('created_at', 'desc') // Ordena de manera descendente
                 ->get();
 
             $view->with(compact('unreadNotifications'));

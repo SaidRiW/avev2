@@ -149,7 +149,6 @@
                             });
                         });
                     });
-
                 }
             }));
             Alpine.data("form", () => ({
@@ -170,5 +169,24 @@
             }));
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var txtMatricula = document.getElementById('txtMatricula');
+            txtMatricula.addEventListener('change', function() {
+                var matricula = this.value;
+                fetch('/apps/cita/estudiante/' + matricula)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById('nombreEstudiante').value = data.nombre;
+                        } else {
+                            document.getElementById('nombreEstudiante').value = 'No existe este estudiante';
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+
 
 </x-layout.default>

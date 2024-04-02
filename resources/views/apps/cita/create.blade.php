@@ -21,6 +21,10 @@
                         <input type="text" id="txtMatricula" name="matricula" class="form-input" pattern="^[0-9]+$"  required />
                     </div>
                     <div class="relative">
+                        <label for="nombreEstudiante">Nombre del estudiante</label>
+                        <input type="text" id="nombreEstudiante" name="nombre_estudiante" class="form-input" class="form-input disabled:pointer-events-none disabled:bg-[#eee] dark:disabled:bg-[#1b2e4b] cursor-not-allowed" disabled />
+                    </div>
+                    <div class="relative">
                         <label for="txtMotivo">Motivo</label>
                         <textarea rows="3" id="txtMotivo" name="motivo" class="form-textarea ltr:rounded-l-none rtl:rounded-r-none"></textarea>
                     </div>

@@ -45,7 +45,10 @@ class PublicacionController extends Controller
             $estudiante = Estudiante::where('id_user', $estudianteLoguedo->_id)->first();
             $grupoEstudiante = $estudiante->grupo['grupo'];
 
-            $data = Publicacion::where('grupo.grupo', $grupoEstudiante)->get();
+            $data = Publicacion::where('grupo.grupo', $grupoEstudiante)
+                    ->orderBy('created_at', 'desc') // Ordena de manera descendente
+                    ->get();
+
             return view('apps.comunidad_estudiante.index')->with(compact('data'));
         }
         
