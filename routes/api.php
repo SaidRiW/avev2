@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiUserController;
 use App\Http\Controllers\ApiEventoPersonalController;
 use App\Http\Controllers\ApiCitaController;
 use App\Http\Controllers\ApiPublicacionController;
+use App\Http\Controllers\ApiAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,16 @@ use App\Http\Controllers\ApiPublicacionController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('login', [ApiAuthController::class, 'login']);
+    Route::post('logout', [ApiAuthController::class, 'logout']);
+    Route::post('refresh', [ApiAuthController::class, 'refresh']);
+    Route::get('me', [ApiAuthController::class, 'me']);
 });
 
 Route::get('/users', [ApiUserController::class, 'index']);
