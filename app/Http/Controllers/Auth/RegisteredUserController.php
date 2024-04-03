@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\Grupo;
@@ -28,7 +29,7 @@ class RegisteredUserController extends Controller
         $dataGrupo = Grupo::all();
         $dataServicio = Servicio::all();
         $dataRol = Rol::where('rol', '!=', 'SuperAdmin')->get();
-        return view('auth.register')->with(compact('dataGrupo','dataServicio','dataRol'));
+        return view('auth.register', compact('dataGrupo', 'dataServicio', 'dataRol'));
     }
 
     /**
@@ -44,6 +45,30 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // URL de la API
+        $url = 'https://prueba2bd2024-default-rtdb.firebaseio.com/correos_activos.json';
+
+        // Realizar la solicitud GET a la API
+        $response = Http::get($url);
+
+        if ($response->successful()) {
+            $correosActivos = $response->json();
+
+            // Buscar el correo en la lista obtenida
+            $correoEncontrado = collect($correosActivos)->contains(function ($value) use ($request) {
+                return isset($value['email']) && $value['email'] === $request->email;
+            });
+
+            if (!$correoEncontrado) {
+                // Si el correo no está en la lista
+                return back()->withErrors(['email' => 'El correo institucional ingresado no está activo. Verifique e intente de nuevo.']);
+            }
+        } else {
+            // Si hay un problema con la solicitud
+            return back()->withErrors(['error' => 'No se pudo verificar el correo electrónico. Intente de nuevo.']);
+        }
+
+        // Si el correo está en la lista, procede con el registro del usuario
         $servicio = Servicio::find($request->servicio);
         $roleId = intval($request->role);
 
@@ -64,16 +89,14 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         if ($request->role === '1') {
-
             $admin = new Administrador;
             $admin->id_user = $user->id;
             $admin->servicio = [
                 'id_servicio' => $servicio->_id,
                 'servicio' => $servicio->nombre,
             ];
-            $admin->created_at = date("Y-m-d h:m:s");
+            $admin->created_at = now();
             $admin->save();
-
         } elseif ($request->role === '3') {
             $grupo = Grupo::find($request->grupo);
 
@@ -84,9 +107,8 @@ class RegisteredUserController extends Controller
                 'id_grupo' => $grupo->_id,
                 'grupo' => $grupo->nombre,
             ];
-            $estudiante->created_at = date("Y-m-d h:m:s");
+            $estudiante->created_at = now();
             $estudiante->save();
-
         }
 
         Auth::login($user);

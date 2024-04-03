@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiUserController;
 use App\Http\Controllers\ApiEventoPersonalController;
 use App\Http\Controllers\ApiCitaController;
 use App\Http\Controllers\ApiPublicacionController;
+use App\Http\Controllers\ApiCorreoController;
 use App\Http\Controllers\ApiAuthController;
 
 /*
@@ -23,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/* API PARA LOGIN DE APP MÓVIL*/
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -31,6 +33,13 @@ Route::group([
     Route::post('logout', [ApiAuthController::class, 'logout']);
     Route::post('refresh', [ApiAuthController::class, 'refresh']);
     Route::get('me', [ApiAuthController::class, 'me']);
+});
+
+/*API PARA REGISTRO DE USUARIOS*/
+Route::post('/check-email', [ApiCorreoController::class, 'checkEmail']);
+
+Route::post('/test', function () {
+    return response()->json(['success' => true, 'message' => 'Test endpoint.']);
 });
 
 Route::get('/users', [ApiUserController::class, 'index']);
