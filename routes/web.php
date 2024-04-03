@@ -25,6 +25,7 @@ use App\Http\Controllers\EventoPersonalController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::view('/goals', 'goals.goals');
 
 /* Rutas para el modulo de calendario */
 Route::middleware('auth')->group(function () {
