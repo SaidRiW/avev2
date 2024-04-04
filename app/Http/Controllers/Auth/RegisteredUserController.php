@@ -99,17 +99,27 @@ class RegisteredUserController extends Controller
             $admin->save();
         } elseif ($request->role === '3') {
             $grupo = Grupo::find($request->grupo);
-
+        
+            $correoEstudiante = $request->email;
+        
+            // Uso de expresión regular para extraer la matrícula del correo
+            if (preg_match('/\d{10}/', $correoEstudiante, $matches)) {
+                $matricula = $matches[0]; // La matrícula es el primer conjunto de 10 dígitos encontrado
+            } else {
+                // En caso de no encontrar una matrícula válida
+                $matricula = 'Matrícula no encontrada';
+            }
+        
             $estudiante = new Estudiante;
             $estudiante->id_user = $user->id;
-            $estudiante->matricula = $request->matricula;
+            $estudiante->matricula = $matricula; // Asignar la matrícula extraída aquí
             $estudiante->grupo = [
                 'id_grupo' => $grupo->_id,
                 'grupo' => $grupo->nombre,
             ];
             $estudiante->created_at = now();
             $estudiante->save();
-        }
+        }        
 
         Auth::login($user);
 

@@ -42,12 +42,6 @@
 
         <!-- Campos adicionales -->
         <div class="mt-4" id="additional_fields" style="display: none;">
-            <!-- Matrícula -->
-            <div id="matricula_field">
-                <x-input-label for="matricula" :value="__('Matrícula')" />
-                <x-text-input id="matricula" class="block mt-1 w-full" type="text" name="matricula" :value="old('matricula')" />
-                <x-input-error :messages="$errors->get('matricula')" class="mt-2" />
-            </div>
 
             <!-- Grupo -->
             <div id="grupo_field">
@@ -112,12 +106,10 @@
 
                 //Mostrar el campo adicional correspondiente al tipo de usuario seleccionado
                 if (role == 3) {
-                    document.getElementById('matricula_field').style.display = 'block';
                     document.getElementById('grupo_field').style.display = 'block';
                     document.getElementById('servicio_field').style.display = 'none'; //Ocultar otro campo
                 } else if (role == 1) {
                     document.getElementById('servicio_field').style.display = 'block';
-                    document.getElementById('matricula_field').style.display = 'none'; //Ocultar otro campo
                     document.getElementById('grupo_field').style.display = 'none'; //Ocultar otro campo
                 }
 
