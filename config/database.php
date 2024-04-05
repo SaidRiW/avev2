@@ -39,10 +39,10 @@ return [
             'driver' => 'mongodb',
             //'host' => env('MONGODB_HOST', '127.0.0.1'),
             //'port' => env('MONGODB_PORT', '27017'),
-            'dsn'   => 'mongodb+srv://saidriw:pollofrito@cluster0.geprfzg.mongodb.net/',
+            'dsn'   => env('MONGODB_URI'),
             'database' => env('MONGODB_DATABASE'),
             'options' => [
-                'database' => 'uts',
+                //'database' => 'uts',
             ],
         ],
 
