@@ -38,7 +38,7 @@ Route::post('/notification/mark-as-read/{id}', [NotificationController::class, '
 
 Route::middleware('auth')->group(function () {
 
-    Route::view('/apps/chat', 'apps.chat');
+    Route::view('/apps/chat', 'apps.chat.index');
     
 });
 
