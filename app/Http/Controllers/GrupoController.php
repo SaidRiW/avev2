@@ -43,6 +43,8 @@ class GrupoController extends Controller
         ];
         $grupo->created_at = date("Y-m-d h:m:s");
         $grupo->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Creación exitosa!');   
         return redirect()->route('apps.grupo.index');
     }
 
@@ -76,6 +78,8 @@ class GrupoController extends Controller
             'carrera' => $carrera->nombre,
         ];
         $grupo->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Modificación exitosa!');   
         return redirect()->route('apps.grupo.index');
     }
 
@@ -85,6 +89,8 @@ class GrupoController extends Controller
     public function destroy(string $id)
     {
         $data = Grupo::find($id)->delete();
+        // Mensaje de sesión
+        session()->flash('success', '¡Eliminación exitosa!');   
         return redirect()->route('apps.grupo.index');
     }
 }

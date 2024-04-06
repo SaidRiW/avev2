@@ -12,7 +12,8 @@
                         </div>
                     </div>
                     <p class="font-bold text-gray-900 dark:text-gray-100 mb-2">{{ $info->titulo }}</p>
-                    <p class="text-gray-800 dark:text-gray-100 leading-snug md:leading-normal">{{ $info->descripcion }}</p>
+                    <!-- Aquí usamos nl2br() para convertir los saltos de línea en etiquetas <br> -->
+                    <p class="text-gray-800 dark:text-gray-100 leading-snug md:leading-normal">{!! nl2br(e($info->descripcion)) !!}</p>
                     @if($info->imagen != 'sin_imagen')
                     <img class="mt-4 mx-auto" src="{{ $info->imagen }}"/>
                     @endif

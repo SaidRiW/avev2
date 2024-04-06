@@ -27,12 +27,14 @@ class PerfilController extends Controller
             $admin = Administrador::where('id_user', $adminLoguedo->_id)->first();
             return view('apps.users.index')->with(compact('admin','user','rol'));
             
-        } elseif(Auth::user()->id_rol == 3) {
+        }elseif(Auth::user()->id_rol == 3) {
 
             $estudianteLoguedo = Auth::user();
             $estudiante = Estudiante::where('id_user', $estudianteLoguedo->_id)->first();
             return view('apps.users.index')->with(compact('estudiante','user','rol'));
 
+        }elseif(Auth::user()->id_rol == 4){
+            return view('apps.users.index')->with(compact('user','rol'));
         }
     }
 
@@ -86,6 +88,8 @@ class PerfilController extends Controller
             $perfil->imagen = $rutaImagen;
 
             $perfil->save();
+            // Mensaje de sesión
+            session()->flash('success', '¡Modificación exitosa!');   
         }
 
         return redirect()->route('apps.users.index');

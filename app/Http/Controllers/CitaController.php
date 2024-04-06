@@ -112,6 +112,8 @@ class CitaController extends Controller
             $cita->motivo = $request->motivo;
 
             $cita->save();
+            // Mensaje de sesión
+            session()->flash('success', '¡Cita agendada exitosamente!');   
 
             event(new CitaEstudianteEvent($cita));
 
@@ -161,6 +163,8 @@ class CitaController extends Controller
             $cita->motivo = $request->motivo;
 
             $cita->save();
+            // Mensaje de sesión
+            session()->flash('success', '¡Cita agendada exitosamente!');   
 
             event(new CitaAdminEvent($cita));
 
@@ -197,6 +201,8 @@ class CitaController extends Controller
         $cita->motivo = $request->motivo;
 
         $cita->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Modificación exitosa!');   
 
         event(new CitaEditEstudianteEvent($cita));
 
@@ -212,10 +218,14 @@ class CitaController extends Controller
             $cita = Cita::findOrFail($id);
             event(new CitaCancelEstudianteEvent($cita));
             $cita->delete();
-            return redirect()->route('apps.cita.index')->with('success', 'Cita cancelada con éxito.');
+            // Mensaje de sesión
+            session()->flash('success', '¡Cita cancelada exitosamente!');   
+            return redirect()->route('apps.cita.index');
         } catch (\Exception $e) {
             // Log the error or handle it as needed
-            return redirect()->route('apps.cita.index')->with('error', 'Error al cancelar la cita.');
+            // Mensaje de sesión
+            session()->flash('success', '¡Error al cancelar la cita!');   
+            return redirect()->route('apps.cita.index');
         }
     } 
     

@@ -128,6 +128,9 @@ class CalendarioController extends Controller
 
             return view('index')->with(compact('eventos', 'dataPrioridad'));
 
+        }elseif(Auth::user()->id_rol == 4){
+            $eventos = [];
+            return view('index')->with(compact('eventos'));
         }
 
     }

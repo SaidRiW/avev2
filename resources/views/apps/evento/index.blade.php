@@ -41,10 +41,13 @@
                                     $cont = 1 ;  
                                 @endphp       
                                 @foreach($data as $info)
+                                    @php
+                                        $descripcionEscapada = addcslashes($info->descripcion, "\n\r\"'\\");
+                                    @endphp
                                     [
                                         '{{ $cont }}',
                                         '{{ $info->titulo }}',
-                                        '{{ $info->descripcion }}',
+                                        '{{ $descripcionEscapada }}',
                                         @if ($info->fecha_hora == '1969-12-31 18:00:00 PM')
                                             '{{'Sin fecha, de lo contrario, asignar.'}}',
                                         @else
@@ -164,10 +167,13 @@
                                 @endphp   
                                 @foreach($dataPublicacion as $publicacion)
                                     @if($publicacion->fechaInicio != '1969-12-31 18:00:00 PM' || $publicacion->fechaFin != '1969-12-31 18:00:00 PM')
+                                        @php
+                                            $descripcionEscapada = addcslashes($publicacion->descripcion, "\n\r\"'\\");
+                                        @endphp
                                         [
                                             '{{ $cont }}',
                                             '{{ $publicacion->titulo }}',
-                                            '{{ $publicacion->descripcion }}',
+                                            '{{ $descripcionEscapada }}',
                                             '{{ $publicacion->fechaInicio }}',
                                             '{{ $publicacion->fechaFin }}',
                                             '<div class="flex items-center"><div class="h-2.5 w-2.5 rounded-sm ltr:mr-2 rtl:ml-2 bg-{{ $publicacion->prioridad["color"] }}"></div><div>{{ $publicacion->prioridad["tipo"] }}</div></div>',
@@ -219,5 +225,30 @@
             }));
         });
     </script>
+@if(session('success'))
+    <script>
+        // Definición de la función showAlert
+        async function showAlert() {
+            new window.Swal({
+                icon: '{{ session("success_icon") }}',
+                title: '{{ session("success") }}',
+                confirmButtonText: 'Cerrar',
+                buttonsStyling: false, // Desactiva el estilo por defecto de los botones
+                customClass: {
+                    confirmButton: 'btn btn-dark my-custom-class', // Aplica una clase propia para personalizar el botón
+                }
+            });
+        }
 
+        // Llamar a showAlert cuando la página se carga
+        window.onload = function() {
+            showAlert();
+        };
+    </script>
+    <style>
+        .my-custom-class {
+            margin-top: 20px;
+        }
+    </style>
+@endif
 </x-layout.default>

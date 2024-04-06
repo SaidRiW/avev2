@@ -15,7 +15,6 @@ class ServicioController extends Controller
     public function index()
     {
         $data = Servicio::all();
-
         return view('apps.servicio.index')->with(compact('data'));
     }
 
@@ -36,6 +35,8 @@ class ServicioController extends Controller
         $servicio->nombre = $request->nombre;
         $servicio->created_at = date("Y-m-d h:m:s");
         $servicio->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Creación exitosa!');     
         return redirect()->route('apps.servicio.index');
     }
 
@@ -63,6 +64,7 @@ class ServicioController extends Controller
         $servicio = Servicio::find($id);
         $servicio->nombre = $request->nombre;
         $servicio->save();
+        session()->flash('success', '¡Modificación exitosa!');  
         return redirect()->route('apps.servicio.index');
     }
 
@@ -72,6 +74,8 @@ class ServicioController extends Controller
     public function destroy(string $id)
     {
         $data = Servicio::find($id)->delete();
+        // Mensaje de sesión
+        session()->flash('success', '¡Eliminación exitosa!');
         return redirect()->route('apps.servicio.index');
     }
 }

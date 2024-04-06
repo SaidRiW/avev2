@@ -16,6 +16,7 @@
 
     <script src="/assets/js/perfect-scrollbar.min.js"></script>
     <script defer src="/assets/js/popper.min.js"></script>
+    <script defer src="/assets/js/sweetalert.min.js"></script>
 </head>
 
 

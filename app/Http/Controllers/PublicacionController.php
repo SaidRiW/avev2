@@ -117,6 +117,10 @@ class PublicacionController extends Controller
         ];
         $publicacion->save();
 
+        // Mensaje de sesión
+        session()->flash('success', '¡Creación exitosa!');
+        session()->flash('success_icon', 'success'); 
+
         event(new PostEvent($publicacion));
 
         return redirect()->route('apps.comunidad.index');
@@ -166,7 +170,11 @@ class PublicacionController extends Controller
             $rutaImagen = '/assets/images/' . $nombreImagen;
             $publicacion->imagen = $rutaImagen;
         }
-    
+        if($prioridad == null || is_null($prioridad->_id)){
+            // Mensaje de sesión
+            session()->flash('success', 'Favor de seleccionar la prioridad.');
+            return redirect()->route('apps.comunidad.index');  
+        }
         $publicacion->prioridad = [
             'id_prioridad' => $prioridad->_id,
             'tipo' => $prioridad->tipo,
@@ -174,6 +182,9 @@ class PublicacionController extends Controller
         ];
     
         $publicacion->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Modificación exitosa!');
+        session()->flash('success_icon', 'success');
         return redirect()->route('apps.comunidad.index');
     }    
 
@@ -183,6 +194,9 @@ class PublicacionController extends Controller
     public function destroy(string $id)
     {
         $data = Publicacion::find($id)->delete();
+        // Mensaje de sesión
+        session()->flash('success', '¡Eliminación exitosa!');
+        session()->flash('success_icon', 'success');
         return redirect()->route('apps.comunidad.index');
     }
 }

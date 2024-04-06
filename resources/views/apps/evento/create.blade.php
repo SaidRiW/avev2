@@ -33,7 +33,7 @@
                         <div class="mt-3">
                         @foreach ($dataPrioridad as $item)
                             <label class="inline-flex cursor-pointer ltr:mr-3 rtl:ml-3">
-                                <input type="radio" class="form-radio text-{{ $item->color}}" name="prioridad"
+                                <input type="radio" class="form-radio text-{{$item->color}}" name="prioridad"
                                     value="{{ $item->_id }}"/>
                                 <span class="ltr:pl-2 rtl:pr-2">{{ $item->tipo }}</span>
                             </label>

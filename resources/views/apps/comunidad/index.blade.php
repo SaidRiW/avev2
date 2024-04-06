@@ -39,10 +39,13 @@
                                     $cont = 1 ;  
                                 @endphp       
                                 @foreach($data as $info)
+                                    @php
+                                        $descripcionEscapada = addcslashes($info->descripcion, "\n\r\"'\\");
+                                    @endphp
                                     [
                                         '{{ $cont }}',
                                         '{{ $info->titulo }}',
-                                        '{{ $info->descripcion }}',
+                                        '{{ $descripcionEscapada }}',
                                         @if ($info->fechaInicio == '1969-12-31 18:00:00 PM' || $info->fechaFin == '1969-12-31 18:00:00 PM')
                                             '{{'Sin fecha, salvo que sea evento, asignar.'}}',
                                             '{{'Sin fecha, salvo que sea evento, asignar.'}}',
@@ -235,5 +238,30 @@
             }));
         });
     </script>
+@if(session('success'))
+    <script>
+        // Definición de la función showAlert
+        async function showAlert() {
+            new window.Swal({
+                icon: '{{ session("success_icon") }}',
+                title: '{{ session("success") }}',
+                confirmButtonText: 'Cerrar',
+                buttonsStyling: false, // Desactiva el estilo por defecto de los botones
+                customClass: {
+                    confirmButton: 'btn btn-dark my-custom-class', // Aplica una clase propia para personalizar el botón
+                }
+            });
+        }
 
+        // Llamar a showAlert cuando la página se carga
+        window.onload = function() {
+            showAlert();
+        };
+    </script>
+    <style>
+        .my-custom-class {
+            margin-top: 20px;
+        }
+    </style>
+@endif
 </x-layout.default>

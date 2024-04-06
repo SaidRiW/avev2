@@ -35,6 +35,8 @@ class CarreraController extends Controller
         $carrera->nombre = $request->nombre;
         $carrera->created_at = date("Y-m-d h:m:s");
         $carrera->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Creación exitosa!');   
         return redirect()->route('apps.carrera.index');
     }
 
@@ -62,6 +64,8 @@ class CarreraController extends Controller
         $carrera = Carrera::find($id);
         $carrera->nombre = $request->nombre;
         $carrera->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Modificación exitosa!');   
         return redirect()->route('apps.carrera.index');
     }
 
@@ -71,6 +75,8 @@ class CarreraController extends Controller
     public function destroy(string $id)
     {
         $data = Carrera::find($id)->delete();
+        // Mensaje de sesión
+        session()->flash('success', '¡Eliminación exitosa!');   
         return redirect()->route('apps.carrera.index');
     }
 }

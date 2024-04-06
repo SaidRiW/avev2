@@ -71,6 +71,9 @@ class EventoPersonalController extends Controller
             'color' => $prioridad->color,
         ];
         $evento->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Evento agendado exitosamente!');
+        session()->flash('success_icon', 'success');
         return redirect()->route('apps.evento.index');    
     }
 
@@ -103,12 +106,20 @@ class EventoPersonalController extends Controller
         $evento->titulo = $request->titulo;
         $evento->descripcion = $request->descripcion;
         $evento->fecha_hora = new UTCDateTime(strtotime($request->fecha_hora) * 1000);
+        if($prioridad == null || is_null($prioridad->_id)){
+            // Mensaje de sesión
+            session()->flash('success', 'Favor de llenar todos los campos.');
+            return redirect()->route('apps.evento.index');  
+        }
         $evento->prioridad = [
             'id_prioridad' => $prioridad->_id,
             'tipo' => $prioridad->tipo,
             'color' => $prioridad->color,
         ];
         $evento->save();
+        // Mensaje de sesión
+        session()->flash('success', '¡Modificación exitosa!'); 
+        session()->flash('success_icon', 'success');
         return redirect()->route('apps.evento.index');    
     }
 
@@ -118,6 +129,9 @@ class EventoPersonalController extends Controller
     public function destroy(string $id)
     {
         $data = EventoPersonal::find($id)->delete();
+        // Mensaje de sesión
+        session()->flash('success', '¡Eliminación exitosa!');
+        session()->flash('success_icon', 'success');
         return redirect()->route('apps.evento.index');
     }
 }
