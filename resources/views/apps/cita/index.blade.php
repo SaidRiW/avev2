@@ -47,7 +47,7 @@
                                         '{{ $info->estudiante["matricula"] }}',
                                         '{{ $info->estudiante["name"] }} {{ $info->estudiante["apellido_pat"] }} {{ $info->estudiante["apellido_mat"] }}',
                                         @if ($info->fecha_hora == '1969-12-31 18:00:00 PM')
-                                            '{{'Sin fecha, cancelar cita.'}}',
+                                            '{{'Sin fecha, editar cita.'}}',
                                         @else
                                             '{{ $info->fecha_hora }}',
                                         @endif
@@ -198,6 +198,31 @@
             new window.Swal({
                 icon: 'success',
                 title: '{{ session("success") }}',
+                confirmButtonText: 'Cerrar',
+                buttonsStyling: false, // Desactiva el estilo por defecto de los botones
+                customClass: {
+                    confirmButton: 'btn btn-dark my-custom-class', // Aplica una clase propia para personalizar el botón
+                }
+            });
+        }
+
+        // Llamar a showAlert cuando la página se carga
+        window.onload = function() {
+            showAlert();
+        };
+    </script>
+    <style>
+        .my-custom-class {
+            margin-top: 20px;
+        }
+    </style>
+@endif
+@if(session('error'))
+    <script>
+        // Definición de la función showAlert
+        async function showAlert() {
+            new window.Swal({
+                title: '{{ session("error") }}',
                 confirmButtonText: 'Cerrar',
                 buttonsStyling: false, // Desactiva el estilo por defecto de los botones
                 customClass: {

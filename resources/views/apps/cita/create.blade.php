@@ -34,7 +34,7 @@
                     </div>
                     <div class="flex justify-between">
                         <button type="button" class="btn btn-outline-danger" id="cancelCreateModal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <button type="submit" class="btn btn-primary">Agendar</button>
                     </div>
                 </form>
             </div>

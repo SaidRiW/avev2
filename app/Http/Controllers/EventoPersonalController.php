@@ -53,6 +53,11 @@ class EventoPersonalController extends Controller
      */
     public function store(Request $request)
     {
+        // Verificar si los campos están presentes y no son nulos
+        if (!$request->filled('titulo')|| !$request->filled('descripcion')|| !$request->filled('fecha_hora') || !$request->filled('prioridad')) {
+            // Si los campos no están presentes o son nulos, muestra una alerta y redirige
+            return redirect()->back()->with('error', 'Todos los campos son obligatorios.');
+        }
         $prioridadId = intval($request->input('prioridad'));
         $prioridad = Prioridad::where('_id', $prioridadId)->first();
 
@@ -73,7 +78,6 @@ class EventoPersonalController extends Controller
         $evento->save();
         // Mensaje de sesión
         session()->flash('success', '¡Evento agendado exitosamente!');
-        session()->flash('success_icon', 'success');
         return redirect()->route('apps.evento.index');    
     }
 
@@ -98,6 +102,12 @@ class EventoPersonalController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Verificar si los campos están presentes y no son nulos
+        if (!$request->filled('titulo')|| !$request->filled('descripcion')|| !$request->filled('fecha_hora') || !$request->filled('prioridad')) {
+            // Si los campos no están presentes o son nulos, muestra una alerta y redirige
+            return redirect()->back()->with('error', 'Todos los campos son obligatorios.');
+        }
+
         $prioridadId = intval($request->input('prioridad'));
         $prioridad = Prioridad::where('_id', $prioridadId)->first();
 
@@ -106,11 +116,6 @@ class EventoPersonalController extends Controller
         $evento->titulo = $request->titulo;
         $evento->descripcion = $request->descripcion;
         $evento->fecha_hora = new UTCDateTime(strtotime($request->fecha_hora) * 1000);
-        if($prioridad == null || is_null($prioridad->_id)){
-            // Mensaje de sesión
-            session()->flash('success', 'Favor de llenar todos los campos.');
-            return redirect()->route('apps.evento.index');  
-        }
         $evento->prioridad = [
             'id_prioridad' => $prioridad->_id,
             'tipo' => $prioridad->tipo,
@@ -119,7 +124,6 @@ class EventoPersonalController extends Controller
         $evento->save();
         // Mensaje de sesión
         session()->flash('success', '¡Modificación exitosa!'); 
-        session()->flash('success_icon', 'success');
         return redirect()->route('apps.evento.index');    
     }
 
@@ -131,7 +135,6 @@ class EventoPersonalController extends Controller
         $data = EventoPersonal::find($id)->delete();
         // Mensaje de sesión
         session()->flash('success', '¡Eliminación exitosa!');
-        session()->flash('success_icon', 'success');
         return redirect()->route('apps.evento.index');
     }
 }

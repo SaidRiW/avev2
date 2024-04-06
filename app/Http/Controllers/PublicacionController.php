@@ -68,6 +68,11 @@ class PublicacionController extends Controller
      */
     public function store(Request $request)
     {
+        // Verificar si los campos 'titulo' y 'prioridad' están presentes y no son nulos
+        if (!$request->filled('titulo') || !$request->filled('prioridad')) {
+            // Si los campos 'titulo' o 'prioridad' no están presentes o son nulos, muestra una alerta y redirige
+            return redirect()->back()->with('error', 'Los campos título y prioridad son obligatorios.');
+        }
         $grupo = Grupo::find($request->grupo);
 
         $prioridadId = intval($request->input('prioridad'));
@@ -119,7 +124,6 @@ class PublicacionController extends Controller
 
         // Mensaje de sesión
         session()->flash('success', '¡Creación exitosa!');
-        session()->flash('success_icon', 'success'); 
 
         event(new PostEvent($publicacion));
 
@@ -147,6 +151,11 @@ class PublicacionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Verificar si los campos 'titulo' y 'prioridad' están presentes y no son nulos
+        if (!$request->filled('titulo') || !$request->filled('prioridad')) {
+            // Si los campos 'titulo' o 'prioridad' no están presentes o son nulos, muestra una alerta y redirige
+            return redirect()->back()->with('error', 'Los campos título y prioridad son obligatorios.');
+        }
         $grupo = Grupo::find($request->grupo);
     
         $prioridadId = intval($request->input('prioridad'));
@@ -172,7 +181,7 @@ class PublicacionController extends Controller
         }
         if($prioridad == null || is_null($prioridad->_id)){
             // Mensaje de sesión
-            session()->flash('success', 'Favor de seleccionar la prioridad.');
+            session()->flash('success', 'El campo prioridad es obligatorio.');
             return redirect()->route('apps.comunidad.index');  
         }
         $publicacion->prioridad = [
@@ -184,7 +193,6 @@ class PublicacionController extends Controller
         $publicacion->save();
         // Mensaje de sesión
         session()->flash('success', '¡Modificación exitosa!');
-        session()->flash('success_icon', 'success');
         return redirect()->route('apps.comunidad.index');
     }    
 
@@ -196,7 +204,6 @@ class PublicacionController extends Controller
         $data = Publicacion::find($id)->delete();
         // Mensaje de sesión
         session()->flash('success', '¡Eliminación exitosa!');
-        session()->flash('success_icon', 'success');
         return redirect()->route('apps.comunidad.index');
     }
 }

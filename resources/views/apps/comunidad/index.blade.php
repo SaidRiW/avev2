@@ -243,8 +243,33 @@
         // Definición de la función showAlert
         async function showAlert() {
             new window.Swal({
-                icon: '{{ session("success_icon") }}',
+                icon: 'success',
                 title: '{{ session("success") }}',
+                confirmButtonText: 'Cerrar',
+                buttonsStyling: false, // Desactiva el estilo por defecto de los botones
+                customClass: {
+                    confirmButton: 'btn btn-dark my-custom-class', // Aplica una clase propia para personalizar el botón
+                }
+            });
+        }
+
+        // Llamar a showAlert cuando la página se carga
+        window.onload = function() {
+            showAlert();
+        };
+    </script>
+    <style>
+        .my-custom-class {
+            margin-top: 20px;
+        }
+    </style>
+@endif
+@if(session('error'))
+    <script>
+        // Definición de la función showAlert
+        async function showAlert() {
+            new window.Swal({
+                title: '{{ session("error") }}',
                 confirmButtonText: 'Cerrar',
                 buttonsStyling: false, // Desactiva el estilo por defecto de los botones
                 customClass: {

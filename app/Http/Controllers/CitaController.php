@@ -70,6 +70,11 @@ class CitaController extends Controller
     {
         if(Auth::user()->id_rol == 1) {
 
+            if (!$request->filled('motivo')) {
+                // Si el campo 'motivo' no está presente o es nulo, muestra una alerta y redirige
+                return redirect()->back()->with('error', 'El campo motivo es obligatorio.');
+            }
+
             $adminLoguedo = Auth::user();
             $admin = Administrador::where('id_user', $adminLoguedo->_id)->first();
 
@@ -121,6 +126,12 @@ class CitaController extends Controller
 
         }elseif(Auth::user()->id_rol == 3) {
 
+            // Verificar si los campos 'motivo' y 'fecha_hora' están presentes y no son nulos
+            if (!$request->filled('motivo') || !$request->filled('fecha_hora')) {
+                // Si los campos 'motivo' o 'fecha_hora' no están presentes o son nulos, muestra una alerta y redirige
+                return redirect()->back()->with('error', 'Todos los campos son obligatorios.');
+            }
+            
             $estudianteLoguedo = Auth::user();
             $estudiante = Estudiante::where('id_user', $estudianteLoguedo->_id)->first();
 
@@ -194,6 +205,10 @@ class CitaController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (!$request->filled('motivo')) {
+            // Si el campo 'motivo' no está presente o es nulo, muestra una alerta y redirige
+            return redirect()->back()->with('error', 'El campo motivo es obligatorio.');
+        }
         $cita = Cita::find($id);
 
         $cita->fecha_hora = new UTCDateTime(strtotime($request->fecha_hora) * 1000);
