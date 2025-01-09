@@ -36,7 +36,7 @@
         <div class="w-3/5 space-y-4 ml-6 mr-12 mb-8">
             <h1 class="text-[1.375rem] font-semibold text-blue-900 mt-4">"LA PLATAFORMA QUE OFRECEMOS CONSTITUYE UNA VALIOSA HERRAMIENTA PARA IMPULSAR LA COMUNICACIÓN".</h1>
             <h2 class="text-xl font-bold">Visión</h2>
-            <p class="text-lg text-justify">Convertir en la plataforma en líder a nivel mundial en la gestión y organización escolar, brindando a docentes y alumnos una herramienta integral que les permita optimizar su tiempo, fomentar la comunicación efectiva y lograr un mayor éxito en su vida académica.</p>
+            <p class="text-lg text-justify">Convertir a la plataforma en líder a nivel mundial en la gestión y organización escolar, brindando a docentes y alumnos una herramienta integral que les permita optimizar su tiempo, fomentar la comunicación efectiva y lograr un mayor éxito en su vida académica.</p>
             <h2 class="text-xl font-bold">Misión</h2>
             <p class="text-lg text-justify">Proporcionar a estudiantes una agenda virtual escolar intuitiva y completa, que les permita organizar sus eventos, mantener una comunicación fluida y eficiente, y llevar un seguimiento adecuado de sus eventos académicas. Nos esforzamos por desarrollar nuestra aplicación y página web para ofrecer la mejor experiencia posible, adaptada a las necesidades cambiantes de la comunidad educativa.</p>
         </div>
